@@ -1,52 +1,33 @@
-# Prerequisites
-*.d
+int kirmizi=10; 
+int yesil=9; 
+int buzzer=8; 
+int sensor=A0;
+int referans=400; 
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+void setup (){
+  pinMode(kirmizi,OUTPUT); 
+  pinMode(yesil,OUTPUT); 
+  pinMode(buzzer,OUTPUT); 
+  pinMode(sensor,INPUT); 
+  Serial.begin(9600); 
+}
 
-# Linker output
-*.ilk
-*.map
-*.exp
+void loop (){
+  int deger=analogRead(sensor); 
+  Serial.print("MQ-2 okunan analog değer");
+  Serial.println(deger); 
 
-# Precompiled Headers
-*.gch
-*.pch
+  if(deger>referans){ 
+    digitalWrite (kirmizi,HIGH); 
+    digitalWrite (yesil,LOW);
+    digitalWrite (buzzer,800); 
+  }
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
+  else{
+    digitalWrite (kirmizi,LOW); 
+    digitalWrite (yesil,HIGH); 
+    noTone(buzzer); 
+  }
 
-# Shared objects (inc. Windows DLLs)
-*.dll
-*.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
+  delay(1000); 
+}
